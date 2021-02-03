@@ -1,25 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Component } from "react";
+import CardList from "./components/card-list/card-list.component";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			monsters: [],
+			clicked: false,
+			text: "ON",
+		};
+
+		this.handleClick = this.handleClick.bind(this);
+	}
+
+	handleClick() {
+		this.setState((state) => {
+			let newBtnText = state.clicked ? "ON" : "OFF";
+			return {
+				...state,
+				clicked: !state.clicked,
+				text: newBtnText,
+			};
+		});
+	}
+
+	// get call when react render the first time to the page
+	componentDidMount() {
+		fetch("https://jsonplaceholder.typicode.com/users")
+			.then((response) => response.json())
+			.then((users) => this.setState({ monsters: users }));
+	}
+
+	render() {
+		return (
+			<div className="App">
+				<header className="App-header">
+					<CardList monsters={this.state.monsters} />
+					<button onClick={() => this.handleClick()}>{this.state.text}</button>
+				</header>
+			</div>
+		);
+	}
 }
 
 export default App;
