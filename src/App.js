@@ -2,12 +2,12 @@ import "./App.css";
 import { Component } from "react";
 import CardList from "./components/card-list/card-list.component";
 
-
 class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			monsters: [],
+			searchField: "",
 			clicked: false,
 			text: "ON",
 		};
@@ -34,10 +34,20 @@ class App extends Component {
 	}
 
 	render() {
+		const { monsters, searchField } = this.state;
+		const filteredMonsters = monsters.filter((monster) =>
+			monster.name.toLowerCase().includes(searchField.toLowerCase())
+		);
+
 		return (
 			<div className="App">
 				<header className="App-header">
-					<CardList monsters={this.state.monsters} />
+					<input
+						type="search"
+						placeholder="Search a monster"
+						onChange={(e) => this.setState({ searchField: e.target.value })}
+					></input>
+					<CardList monsters={filteredMonsters} />
 					<button onClick={() => this.handleClick()}>{this.state.text}</button>
 				</header>
 			</div>
