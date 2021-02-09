@@ -1,6 +1,7 @@
 import "./App.css";
 import { Component } from "react";
-import CardList from "./components/card-list/card-list.component";
+import { CardList } from "./components/card-list/card-list.component";
+import { SearchBox } from "./components/search-box/search-box.component";
 
 class App extends Component {
 	constructor(props) {
@@ -13,6 +14,7 @@ class App extends Component {
 		};
 
 		this.handleClick = this.handleClick.bind(this);
+	    this.handleChange = this.handleChange.bind(this);
 	}
 
 	handleClick() {
@@ -33,6 +35,10 @@ class App extends Component {
 			.then((users) => this.setState({ monsters: users }));
 	}
 
+	handleChange(e) {
+		this.setState({ searchField: e.target.value });
+	}
+
 	render() {
 		const { monsters, searchField } = this.state;
 		const filteredMonsters = monsters.filter((monster) =>
@@ -41,15 +47,12 @@ class App extends Component {
 
 		return (
 			<div className="App">
-				<header className="App-header">
-					<input
-						type="search"
-						placeholder="Search a monster"
-						onChange={(e) => this.setState({ searchField: e.target.value })}
-					></input>
-					<CardList monsters={filteredMonsters} />
-					<button onClick={() => this.handleClick()}>{this.state.text}</button>
-				</header>
+				<SearchBox
+					placeholder="Search a monster"
+					handleChange={this.handleChange}
+				/>
+				<CardList monsters={filteredMonsters} />
+				<button onClick={() => this.handleClick()}>{this.state.text}</button>
 			</div>
 		);
 	}
