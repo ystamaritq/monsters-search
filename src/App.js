@@ -9,24 +9,24 @@ class App extends Component {
 		this.state = {
 			monsters: [],
 			searchField: "",
-			clicked: false,
-			text: "ON",
+			// clicked: false,
+			// text: "ON",
 		};
 
-		this.handleClick = this.handleClick.bind(this);
+		// this.handleClick = this.handleClick.bind(this);
 	    this.handleChange = this.handleChange.bind(this);
 	}
 
-	handleClick() {
-		this.setState((state) => {
-			let newBtnText = state.clicked ? "ON" : "OFF";
-			return {
-				...state,
-				clicked: !state.clicked,
-				text: newBtnText,
-			};
-		});
-	}
+	// handleClick() {
+	// 	this.setState((state) => {
+	// 		let newBtnText = state.clicked ? "ON" : "OFF";
+	// 		return {
+	// 			...state,
+	// 			clicked: !state.clicked,
+	// 			text: newBtnText,
+	// 		};
+	// 	});
+	// }
 
 	// get call when react render the first time to the page
 	componentDidMount() {
@@ -47,12 +47,13 @@ class App extends Component {
 
 		return (
 			<div className="App">
+				<h1>Monsters Rolodex</h1>
 				<SearchBox
 					placeholder="Search a monster"
 					handleChange={this.handleChange}
 				/>
 				<CardList monsters={filteredMonsters} />
-				<button onClick={() => this.handleClick()}>{this.state.text}</button>
+				{/* <button onClick={() => this.handleClick()}>{this.state.text}</button> */}
 			</div>
 		);
 	}
